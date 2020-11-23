@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#convert pcap file to hashcat format
+# Zero-Byte
+# Single-Salt
+# Brute-Force
+# Slow-Hash-SIMD-LOOP
+
+read -p "enter path to text document " path
+read -p "enter path to *.hccapx " key
+for INPUT in $path , $key
+do
+	hashcat --stdout $path -r rules/best64.rule --increment -1 "?l?d?u" --force -O -w 4 --opencl-device-types | hashcat -m 2500 -a 3 $key
+done
